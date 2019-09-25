@@ -17,7 +17,7 @@ Renderer::Renderer(const Vector2f &size) : Rectangle(size) {
     deltaClock = new C2DClock();
     elapsedClock = new C2DClock();
 
-    input = new C2DInput();
+    input = new C2DInput(this);
     input->setJoystickMapping(0, C2D_DEFAULT_JOY_KEYS);
     input->setKeyboardMapping(C2D_DEFAULT_KB_KEYS);
 
@@ -65,7 +65,7 @@ void Renderer::setClearColor(const Color &color) {
     m_clearColor = color;
 }
 
-const Color Renderer::getClearColor() {
+const Color& Renderer::getClearColor() const {
     return m_clearColor;
 }
 

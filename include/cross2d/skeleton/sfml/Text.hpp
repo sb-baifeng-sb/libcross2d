@@ -210,7 +210,7 @@ namespace c2d {
         ////////////////////////////////////////////////////////////
         void setOutlineThickness(float thickness);
 
-        void setAlpha(uint8_t alpha, bool recursive = false);
+        void setAlpha(uint8_t alpha, bool recursive = false) override;
 
         uint8_t getAlpha();
 

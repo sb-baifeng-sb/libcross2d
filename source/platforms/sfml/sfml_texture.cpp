@@ -2,12 +2,16 @@
 // Created by cpasjuste on 01/12/16.
 //
 
+#if defined(__MAC__)
+#include <OpenGL/gl.h>
+#else
 #include <GL/gl.h>
+#endif
 #include "cross2d/c2d.h"
 
 using namespace c2d;
 
-SFMLTexture::SFMLTexture(const char *path) : Texture(path) {
+SFMLTexture::SFMLTexture(const std::string &path) : Texture(path) {
 
     if (texture.loadFromFile(path)) {
         setSize(Vector2f(texture.getSize().x, texture.getSize().y));
@@ -17,11 +21,11 @@ SFMLTexture::SFMLTexture(const char *path) : Texture(path) {
         pixels = new sf::Uint8[(int) getSize().x * (int) getSize().y * bpp];
         available = true;
     } else {
-        printf("Couldn't create texture: %s\n", path);
+        printf("Couldn't create texture: %s\n", path.c_str());
     }
 }
 
-SFMLTexture::SFMLTexture(const Vector2f &size, int format) : Texture(size, format) {
+SFMLTexture::SFMLTexture(const Vector2f &size, SFMLTexture::Format format) : Texture(size, format) {
 
     if (texture.create((uint) size.x, (uint) size.y)) {
         setSize(Vector2f(texture.getSize().x, texture.getSize().y));
@@ -56,7 +60,7 @@ void SFMLTexture::unlock() {
     glGetIntegerv(GL_TEXTURE_BINDING_2D, &textureBinding);
     sf::Texture::bind(&texture);
 
-    if (format == C2D_TEXTURE_FMT_RGBA8) {
+    if (format == Format::RGBA8) {
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, (GLsizei) getSize().x, (GLsizei) getSize().y,
                         GL_RGBA, GL_UNSIGNED_BYTE, pixels);
     } else {

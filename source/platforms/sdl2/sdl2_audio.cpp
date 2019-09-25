@@ -2,7 +2,11 @@
 // Created by cpasjuste on 12/12/16.
 //
 
+#if defined(__MAC__)
+#include <sys/malloc.h>
+#else
 #include <malloc.h>
+#endif
 #include "cross2d/platforms/sdl2/sdl2_audio.h"
 
 using namespace c2d;

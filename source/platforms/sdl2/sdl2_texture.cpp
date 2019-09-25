@@ -5,12 +5,12 @@
 #ifndef __SDL2_GL__
 
 #include <png.h>
-#include "c2d.h"
+#include "cross2d/c2d.h"
 #include "skeleton/lodepng.h"
 
 using namespace c2d;
 
-SDL2Texture::SDL2Texture(const char *path) : Texture(path) {
+SDL2Texture::SDL2Texture(const std::string &path) : Texture(path) {
 
     unsigned int w, h, error = 0;
     unsigned char *pixels;

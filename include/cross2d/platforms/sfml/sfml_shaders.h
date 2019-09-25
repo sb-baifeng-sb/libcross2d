@@ -2,14 +2,14 @@
 // Created by cpasjuste on 27/01/17.
 //
 
-#ifndef CROSS2D_SFML_SHADERS_H
-#define CROSS2D_SFML_SHADERS_H
+#ifndef C2D_SFML_SHADERS_H
+#define C2D_SFML_SHADERS_H
 
-#include "skeleton/shaders.h"
+#include "cross2d/skeleton/shader_list.h"
 
 namespace c2d {
 
-    class SFMLShaders : Shaders {
+    class SFMLShaders : ShaderList {
 
     public:
 

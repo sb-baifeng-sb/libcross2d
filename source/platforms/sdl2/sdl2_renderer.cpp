@@ -14,7 +14,8 @@
 
 #endif
 
-#include "c2d.h"
+#include "cross2d/c2d.h"
+#include "cross2d/platforms/sdl2/sdl2_renderer.h"
 
 using namespace c2d;
 

@@ -117,7 +117,7 @@ namespace c2d {
         /// \see getFillColor, setOutlineColor
         ///
         ////////////////////////////////////////////////////////////
-        virtual void setAlpha(uint8_t alpha, bool recursive = false);
+        virtual void setAlpha(uint8_t alpha, bool recursive = false) override;
 
         virtual uint8_t getAlpha();
 

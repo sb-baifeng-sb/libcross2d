@@ -164,6 +164,39 @@ elseif (BUILD_LINUX)
         list(APPEND PLATFORM_LIBS ${GLEW_LIBRARIES})
         list(APPEND FLAGS -D__WINDOWS__)
     endif (BUILD_WINDOWS)
+elseif (BUILD_MAC)
+    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${cross2d_SOURCE_DIR}/cmake/sfml;${cross2d_SOURCE_DIR}/cmake/sdl2")
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+    set(CMAKE_CXX_STANDARD 14)
+    set(CMAKE_CXX_EXTENSIONS ON)
+    find_package(SFML 2 COMPONENTS graphics window audio system)
+    find_package(SDL2 REQUIRED)
+    find_package(ZLIB REQUIRED)
+    find_package(Freetype REQUIRED)
+    find_package(OpenGL REQUIRED)
+    #message(STATUS "MAC: ${cross2d_SOURCE_DIR}")
+    #message(STATUS "MAC: include<${SDL2_INCLUDE_DIR}> libs<${SDL2_LIBRARY_TEMP}>")
+    #message(STATUS "MAC: include<${SFML_INCLUDE_DIR}> libs<${SFML_LIBRARIES}>")
+    #message(STATUS "MAC: include<${FREETYPE_INCLUDE_DIRS}> libs<${FREETYPE_LIBRARIES}>")
+    #message(STATUS "MAC: include<${ZLIB_INCLUDE_DIRS}> libs<${ZLIB_LIBRARIES}>")
+    #message(STATUS "MAC: include<${OPENGL_INCLUDE_DIR}> libs<${OPENGL_LIBRARIES}>")
+    set(CROSS2D_DIR include source/skeleton/libconfig)
+    set(PLATFORM_DIRS
+            source/platforms/gl
+            source/platforms/posix
+            ${SDL2_INCLUDE_DIR}
+            ${SFML_INCLUDE_DIR}
+            ${FREETYPE_INCLUDE_DIRS}
+            ${ZLIB_INCLUDE_DIRS}
+            ${OPENGL_INCLUDE_DIR})
+    file(GLOB PLATFORM_SRC
+            source/skeleton/libconfig/*.c
+            source/platforms/gl/*.c*
+            source/platforms/gl/shaders/*.c*
+            source/platforms/sfml/*.c*
+            source/platforms/posix/*.c*)
+    set(PLATFORM_LIBS ${SDL2_LIBRARY_TEMP} ${SFML_LIBRARIES} ${FREETYPE_LIBRARIES} ${ZLIB_LIBRARIES} ${OPENGL_LIBRARIES})
+    list(APPEND FLAGS -D__SFML__ -D__MAC__)
 endif ()
 
 add_library(${PROJECT_NAME} ${CROSS2D_SRC} ${PLATFORM_SRC})

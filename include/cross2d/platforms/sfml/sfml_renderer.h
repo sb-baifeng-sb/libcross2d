@@ -2,8 +2,8 @@
 // Created by cpasjuste on 21/11/16.
 //
 
-#ifndef SFML_RENDERER_H
-#define SFML_RENDERER_H
+#ifndef C2D_SFML_RENDERER_H
+#define C2D_SFML_RENDERER_H
 
 #include <SFML/Graphics.hpp>
 #include "cross2d/skeleton/renderer.h"
@@ -19,15 +19,11 @@ namespace c2d {
 
         ~SFMLRenderer();
 
-        void draw(const VertexArray &vertices,
-                  const Transform &transform,
-                  const Texture *texture);
+        void draw(VertexArray *vertexArray, const Transform &transform, Texture *texture) override;
 
-        void flip();
+        void flip(bool draw = true, bool inputs = true) override;
 
-        void delay(unsigned int ms);
-
-        void setShader(int index);
+        void delay(unsigned int ms) override;
 
         //private:
         sf::RenderWindow window;

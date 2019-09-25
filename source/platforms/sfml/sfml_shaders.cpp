@@ -3,19 +3,19 @@
 //
 
 #include <SFML/Graphics/Shader.hpp>
-#include "posix/posix_io.h"
-#include "sfml/sfml_shaders.h"
+#include "cross2d/platforms/posix/posix_io.h"
+#include "cross2d/platforms/sfml/sfml_shaders.h"
 
 using namespace c2d;
 
-SFMLShaders::SFMLShaders(const std::string &shadersPath) : Shaders(shadersPath) {
+SFMLShaders::SFMLShaders(const std::string &shadersPath) : ShaderList(shadersPath) {
 
     if (sf::Shader::isAvailable()) {
         POSIXIo io;
-        std::vector<std::string> shaderList = io.GetDirList(shadersPath.c_str());
+        std::vector<Io::File> shaderList = io.getDirList(shadersPath.c_str(), false, false);
         for (unsigned int i = 0; i < shaderList.size(); i++) {
-            const std::string name = shaderList[i].substr(0, shaderList[i].find_last_of("."));
-            if (shaderList[i].substr(shaderList[i].find_last_of(".") + 1) == "v") { // vertex shader
+            const std::string name = shaderList[i].name.substr(0, shaderList[i].name.find_last_of("."));
+            if (shaderList[i].name.substr(shaderList[i].name.find_last_of(".") + 1) == "v") { // vertex shader
                 sf::Shader *shader = new sf::Shader();
                 if (shader->loadFromFile(
                         shadersPath + "/" + name + ".v",

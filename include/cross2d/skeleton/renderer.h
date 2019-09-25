@@ -46,7 +46,7 @@ namespace c2d {
 
         void setClearColor(const Color &color);
 
-        const Color getClearColor();
+        const Color& getClearColor() const;
 
         Time getDeltaTime() const;
 

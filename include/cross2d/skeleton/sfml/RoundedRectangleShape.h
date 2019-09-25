@@ -19,8 +19,8 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef ROUNDEDRECTANGLESHAPE_HPP
-#define ROUNDEDRECTANGLESHAPE_HPP
+#ifndef C2D_SFML_ROUNDEDRECTANGLESHAPE_HPP
+#define C2D_SFML_ROUNDEDRECTANGLESHAPE_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers

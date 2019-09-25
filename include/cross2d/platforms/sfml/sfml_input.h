@@ -2,12 +2,12 @@
 // Created by cpasjuste on 11/01/17.
 //
 
-#ifndef _SFML_INPUT_H
-#define _SFML_INPUT_H
+#ifndef C2D_SFML_INPUT_H
+#define C2D_SFML_INPUT_H
 
 namespace c2d {
 
-    class SFMLInput : Input {
+    class SFMLInput : public Input {
 
     public:
 
@@ -27,6 +27,9 @@ namespace c2d {
         virtual void process_buttons(Player &player, int rotate = 0);
 
         virtual void process_keyboard(Player &player, int rotate = 0);
+
+    private:
+        Renderer* renderer;
     };
 
 }

@@ -13,7 +13,7 @@ namespace c2d {
 
     public:
 
-        SDL2Texture(const char *path);
+        SDL2Texture(const std::string &path);
 
         SDL2Texture(const unsigned char *buffer, int bufferSize);
 

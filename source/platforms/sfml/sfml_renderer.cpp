@@ -2,7 +2,11 @@
 // Created by cpasjuste on 21/11/16.
 //
 
+#if defined(__MAC__)
+#include <OpenGL/gl.h>
+#else
 #include <GL/gl.h>
+#endif
 #include "cross2d/c2d.h"
 
 using namespace c2d;
@@ -29,31 +33,17 @@ SFMLRenderer::SFMLRenderer(const Vector2f &size, const std::string &shaderPath) 
     const unsigned char *glslversion = glGetString(GL_SHADING_LANGUAGE_VERSION);
     printf("SFMLRenderer: glslversion: %s\n", glslversion);
 
-    if (shaders) {
-        delete (shaders);
-    }
-    shaders = (Shaders * )
-    new SFMLShaders(shaderPath);
+    shaderList = (ShaderList*) new SFMLShaders(shaderPath);
 }
 
-void SFMLRenderer::setShader(int index) {
-
-    if (index == shaders->current || index >= shaders->getCount()) {
-        return;
-    }
-    shaders->current = index;
-}
-
-void SFMLRenderer::draw(const VertexArray &vertices,
-                        const Transform &transform,
-                        const Texture *texture) {
+void SFMLRenderer::draw(VertexArray *vertexArray, const Transform &transform, Texture *texture) {
 
     sf::RenderStates states;
     states.transform = ((sf::Transform &) transform);
     if (texture) {
         states.texture = &((SFMLTexture *) texture)->texture;
 
-        sf::Shader *shader = (sf::Shader *) shaders->get()->data;
+        sf::Shader *shader = (sf::Shader *) shaderList->get(0);
         if (shader) {
             shader->setUniform("Texture", ((SFMLTexture *) texture)->texture);
             shader->setUniform("MVPMatrix", sf::Glsl::Mat4(
@@ -72,15 +62,17 @@ void SFMLRenderer::draw(const VertexArray &vertices,
 
     }
 
-    window.draw((sf::Vertex *) vertices.getVertices().data(), vertices.getVertexCount(),
-                (sf::PrimitiveType) vertices.getPrimitiveType(), states);
+    auto v = *vertexArray;
+    window.draw((sf::Vertex *) (*v.getVertices()).data(), v.getVertexCount(),
+                (sf::PrimitiveType) v.getPrimitiveType(), states);
 
 }
 
-void SFMLRenderer::flip() {
+void SFMLRenderer::flip(bool draw, bool inputs) {
 
     // clear screen
-    window.clear((const sf::Color &) getFillColor());
+    auto c = this->getClearColor();
+    window.clear(sf::Color(c.r, c.g, c.b, c.a));
 
     // call base class (draw childs)
     Renderer::flip();
@@ -90,12 +82,9 @@ void SFMLRenderer::flip() {
 }
 
 void SFMLRenderer::delay(unsigned int ms) {
-
     sf::sleep(sf::milliseconds(ms));
 }
 
 SFMLRenderer::~SFMLRenderer() {
-
-    delete (shaders);
     window.close();
 }

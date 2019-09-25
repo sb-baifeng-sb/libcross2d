@@ -3,6 +3,7 @@
 //
 
 #include "cross2d/c2d.h"
+#include "cross2d/platforms/sdl2/sdl2_input.h"
 
 using namespace c2d;
 
@@ -59,6 +60,10 @@ SDL2Input::SDL2Input() : Input() {
     for (int i = 0; i < KEY_COUNT; i++) {
         keyboard.mapping[i] = 0;
     }
+}
+
+SDL2Input::SDL2Input(Renderer *renderer):SDL2Input() {
+
 }
 
 SDL2Input::~SDL2Input() {
