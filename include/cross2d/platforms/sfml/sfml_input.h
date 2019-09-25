@@ -15,9 +15,9 @@ namespace c2d {
 
         virtual ~SFMLInput();
 
-        virtual Player *Update(int rotate = 0);
+        virtual int waitButton(int player = 0) override;
 
-        virtual int GetButton(int player);
+        virtual Player *update(int rotate = 0) override;
 
     private:
         virtual void process_axis(Player &player, int rotate = 0);

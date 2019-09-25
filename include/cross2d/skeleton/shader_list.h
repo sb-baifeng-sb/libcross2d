@@ -38,7 +38,7 @@ namespace c2d {
         }
 
         virtual Shader *get(int index) {
-            if ((size_t) index >= list.size()) {
+            if (index == 0 || (size_t) index >= list.size()) {
                 return nullptr;
             }
             return &list[index];
@@ -61,7 +61,7 @@ namespace c2d {
             return names;
         }
 
-        virtual int getCount() {
+        virtual int getCount() const {
             return list.size();
         }
 

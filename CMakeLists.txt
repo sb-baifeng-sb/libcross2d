@@ -21,6 +21,10 @@ project(cross2d)
 # flags
 set(FLAGS -Wall -DLIBCONFIG_STATIC)
 
+if (BUILD_DEBUG)
+    list(APPEND FLAGS -g -O2)
+endif (BUILD_DEBUG)
+
 ##############
 # CROSS2D
 ##############

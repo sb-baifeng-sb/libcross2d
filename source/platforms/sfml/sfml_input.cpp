@@ -63,9 +63,9 @@ SFMLInput::~SFMLInput() {
     }
 }
 
-int SFMLInput::GetButton(int player) {
+int SFMLInput::waitButton(int player) {
     sf::Event event;
-    while (((SFMLRenderer *) renderer)->window.pollEvent(event)) {
+    while (((SFMLRenderer *) renderer)->window->pollEvent(event)) {
         if (event.type == sf::Event::JoystickButtonPressed) {
             if ((int) event.joystickButton.joystickId == player) {
                 return event.joystickButton.button;
@@ -75,7 +75,7 @@ int SFMLInput::GetButton(int player) {
     return -1;
 }
 
-Input::Player *SFMLInput::Update(int rotate) {
+Input::Player *SFMLInput::update(int rotate) {
 
     for (int i = 0; i < PLAYER_MAX; i++) {
         players[i].keys = 0;
@@ -85,7 +85,7 @@ Input::Player *SFMLInput::Update(int rotate) {
     SFMLRenderer *rdr = ((SFMLRenderer *) renderer);
 
     sf::Event event = {};
-    while (((SFMLRenderer *) renderer)->window.pollEvent(event)) {
+    while (((SFMLRenderer *) renderer)->window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
             players[0].keys |= EV_QUIT;
             return players;
@@ -93,8 +93,8 @@ Input::Player *SFMLInput::Update(int rotate) {
 
         if (event.type == sf::Event::Resized) {
             sf::View v = sf::View(
-                    sf::FloatRect(0.f, 0.f, rdr->window.getSize().x, rdr->window.getSize().y));
-            rdr->window.setView(v);
+                    sf::FloatRect(0.f, 0.f, rdr->window->getSize().x, rdr->window->getSize().y));
+            rdr->window->setView(v);
             players[0].keys |= EV_RESIZE;
             return players;
         }

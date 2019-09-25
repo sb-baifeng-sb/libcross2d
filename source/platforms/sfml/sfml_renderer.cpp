@@ -15,7 +15,7 @@ SFMLRenderer::SFMLRenderer(const Vector2f &size, const std::string &shaderPath) 
 
     sf::ContextSettings settings(16, 0, 0);
     mode = sf::VideoMode::getDesktopMode();
-    sf::Uint32 style = sf::Style::Fullscreen;
+    sf::Uint32 style = sf::Style::Titlebar | sf::Style::Close; //sf::Style::Fullscreen;
 
     // windowed
     if (getSize().x != 0 && getSize().y != 0) {
@@ -24,8 +24,11 @@ SFMLRenderer::SFMLRenderer(const Vector2f &size, const std::string &shaderPath) 
         style = sf::Style::Default;
     }
 
-    window.create(mode, "SFMLRenderer", style, settings);
-    window.setVerticalSyncEnabled(true);
+    //window->create(mode, "SFMLRenderer", style, settings);
+    //window = new sf::RenderWindow(sf::VideoMode(w, h, 32), "demo", sf::Style::Titlebar | sf::Style::Close);
+    window = new sf::RenderWindow(mode, "demo", style, settings);
+    window->setVerticalSyncEnabled(true);
+    window->setFramerateLimit(60);
 
     printf("SFMLRenderer: %i x %i @ %i bpp\n", mode.width, mode.height, mode.bitsPerPixel);
     const unsigned char *glversion = glGetString(GL_VERSION);
@@ -47,7 +50,7 @@ void SFMLRenderer::draw(VertexArray *vertexArray, const Transform &transform, Te
         if (shader) {
             shader->setUniform("Texture", ((SFMLTexture *) texture)->texture);
             shader->setUniform("MVPMatrix", sf::Glsl::Mat4(
-                    window.getView().getTransform().getMatrix()));
+                    window->getView().getTransform().getMatrix()));
             shader->setUniform("TextureSize", sf::Glsl::Vec2(
                     texture->getTextureRect().width,
                     texture->getTextureRect().height));
@@ -63,7 +66,7 @@ void SFMLRenderer::draw(VertexArray *vertexArray, const Transform &transform, Te
     }
 
     auto v = *vertexArray;
-    window.draw((sf::Vertex *) (*v.getVertices()).data(), v.getVertexCount(),
+    window->draw((sf::Vertex *) (*v.getVertices()).data(), v.getVertexCount(),
                 (sf::PrimitiveType) v.getPrimitiveType(), states);
 
 }
@@ -72,13 +75,13 @@ void SFMLRenderer::flip(bool draw, bool inputs) {
 
     // clear screen
     auto c = this->getClearColor();
-    window.clear(sf::Color(c.r, c.g, c.b, c.a));
+    window->clear(sf::Color(c.r, c.g, c.b, c.a));
 
     // call base class (draw childs)
     Renderer::flip();
 
     // flip
-    window.display();
+    window->display();
 }
 
 void SFMLRenderer::delay(unsigned int ms) {
@@ -86,5 +89,5 @@ void SFMLRenderer::delay(unsigned int ms) {
 }
 
 SFMLRenderer::~SFMLRenderer() {
-    window.close();
+    delete window;
 }

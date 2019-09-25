@@ -36,8 +36,9 @@ SFMLShaders::~SFMLShaders() {
 
     if (sf::Shader::isAvailable()) {
         for (int i = 0; i < getCount(); i++) {
-            if (get(i)->data != NULL) {
-                delete ((sf::Shader *) get(i)->data);
+            auto p = this->get(i);
+            if (p && p->data != nullptr) {
+                delete ((sf::Shader *) p->data);
             }
         }
     }

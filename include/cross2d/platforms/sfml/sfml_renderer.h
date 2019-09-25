@@ -26,7 +26,7 @@ namespace c2d {
         void delay(unsigned int ms) override;
 
         //private:
-        sf::RenderWindow window;
+        sf::RenderWindow* window;
         sf::VideoMode mode;
     };
 }
