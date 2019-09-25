@@ -13,7 +13,7 @@ using namespace c2d;
 
 SFMLRenderer::SFMLRenderer(const Vector2f &size, const std::string &shaderPath) : Renderer(size) {
 
-    sf::ContextSettings settings(16, 0, 0);
+    sf::ContextSettings settings(32, 0, 0);
     mode = sf::VideoMode::getDesktopMode();
     sf::Uint32 style = sf::Style::Titlebar | sf::Style::Close; //sf::Style::Fullscreen;
 
@@ -21,11 +21,9 @@ SFMLRenderer::SFMLRenderer(const Vector2f &size, const std::string &shaderPath) 
     if (getSize().x != 0 && getSize().y != 0) {
         mode.width = (unsigned int) getSize().x;
         mode.height = (unsigned int) getSize().y;
-        style = sf::Style::Default;
+        //style = sf::Style::Default;
     }
 
-    //window->create(mode, "SFMLRenderer", style, settings);
-    //window = new sf::RenderWindow(sf::VideoMode(w, h, 32), "demo", sf::Style::Titlebar | sf::Style::Close);
     window = new sf::RenderWindow(mode, "demo", style, settings);
     window->setVerticalSyncEnabled(true);
     window->setFramerateLimit(60);
