@@ -44,7 +44,7 @@ void SFMLRenderer::draw(VertexArray *vertexArray, const Transform &transform, Te
     if (texture) {
         states.texture = &((SFMLTexture *) texture)->texture;
 
-        sf::Shader *shader = (sf::Shader *) shaderList->get(0);
+        sf::Shader *shader = (sf::Shader *) shaderList->get(0)->data;
         if (shader) {
             shader->setUniform("Texture", ((SFMLTexture *) texture)->texture);
             shader->setUniform("MVPMatrix", sf::Glsl::Mat4(

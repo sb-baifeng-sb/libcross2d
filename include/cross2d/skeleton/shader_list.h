@@ -38,7 +38,7 @@ namespace c2d {
         }
 
         virtual Shader *get(int index) {
-            if (index == 0 || (size_t) index >= list.size()) {
+            if ((size_t) index >= list.size()) {
                 return nullptr;
             }
             return &list[index];

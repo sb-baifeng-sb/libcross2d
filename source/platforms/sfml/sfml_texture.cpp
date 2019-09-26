@@ -15,6 +15,7 @@ SFMLTexture::SFMLTexture(const std::string &path) : Texture(path) {
 
     if (texture.loadFromFile(path)) {
         setSize(Vector2f(texture.getSize().x, texture.getSize().y));
+        setTexture(this);
         setTextureRect(IntRect(0, 0, (int) getSize().x, (int) getSize().y));
         bpp = 4;
         pitch = (int) (getSize().x * bpp);
@@ -29,6 +30,7 @@ SFMLTexture::SFMLTexture(const Vector2f &size, SFMLTexture::Format format) : Tex
 
     if (texture.create((uint) size.x, (uint) size.y)) {
         setSize(Vector2f(texture.getSize().x, texture.getSize().y));
+        setTexture(this);
         setTextureRect(IntRect(0, 0, (int) texture.getSize().x, (int) texture.getSize().y));
         bpp = 4;
         pitch = (int) (getSize().x * bpp);
