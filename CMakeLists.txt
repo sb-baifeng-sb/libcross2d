@@ -140,7 +140,7 @@ elseif (BUILD_SWITCH)
             )
     set(PLATFORM_LIBS
             SDL2 glad EGL glapi drm_nouveau nx
-            freetype bz2 png config z
+            freetype bz2 png z
             )
     ########################
     # LINUX PLATORM (SDL2)
