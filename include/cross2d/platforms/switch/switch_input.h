@@ -13,6 +13,7 @@ namespace c2d {
 
     public:
         SWITCHInput();
+        SWITCHInput(Renderer *renderer);
 
         virtual Player *update(int rotate = 0) override;
 

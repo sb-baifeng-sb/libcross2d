@@ -9,6 +9,9 @@ using namespace c2d;
 SWITCHInput::SWITCHInput() : SDL2Input() {
 }
 
+SWITCHInput::SWITCHInput(Renderer *renderer) : SDL2Input() {
+}
+
 Input::Player *SWITCHInput::update(int rotate) {
 
     Input::Player *players = SDL2Input::update(rotate);
