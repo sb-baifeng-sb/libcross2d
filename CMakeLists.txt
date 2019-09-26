@@ -116,6 +116,7 @@ elseif (BUILD_3DS)
     #####################
 elseif (BUILD_SWITCH)
     set(PLATFORM_DIRS
+            source/skeleton/libconfig
             source/platforms/gl
             source/platforms/sdl2
             source/platforms/posix
@@ -123,6 +124,7 @@ elseif (BUILD_SWITCH)
             ${DEVKITPRO}/portlibs/switch/include/freetype2
             )
     file(GLOB PLATFORM_SRC
+            source/skeleton/libconfig/*.c
             source/platforms/gl/*.c*
             source/platforms/gl/shaders/*.c*
             source/platforms/sdl2/*.c*
