@@ -41,7 +41,7 @@ void Renderer::flip(bool draw, bool inputs) {
         }
     }
 
-    onUpdate();
+    onUpdate(deltaClock->restart().asSeconds());
 
     // call base class (draw childs)
     if (draw) {

@@ -10,7 +10,7 @@ void C2DObject::add(C2DObject *object) {
 
     if (object) {
         //printf("C2DObject(%p): add(%p)\n", this, C2DObject);
-        object->parent = this;
+        object->setParent(this);
         object->setLayer(object->getLayer());
         childs.push_back(object);
     }
@@ -43,21 +43,21 @@ void C2DObject::remove(Tween *tween) {
 
 bool C2DObject::onInput(Input::Player *players) {
 
-    for (auto &child : childs) {
+    for (int i = childs.size() - 1; i >= 0; --i) {
+        auto& child = childs[i];
         if (child && child->isVisible()) {
             if (child->onInput(players)) {
                 return true;
             }
         }
     }
-
     return false;
 }
 
-void C2DObject::onUpdate() {
+void C2DObject::onUpdate(float dt) {
     for (auto &child : childs) {
         if (child) {
-            child->onUpdate();
+            child->onUpdate(dt);
         }
     }
 }
@@ -139,7 +139,16 @@ void C2DObject::setAlpha(uint8_t alpha, bool recursive) {
     }
 }
 
-DeleteMode C2DObject::getDeleteMode() {
+void C2DObject::setParent(C2DObject* parent) {
+    assert(this->parent == nullptr);
+    this->parent = parent;
+}
+
+C2DObject* C2DObject::getParent() const {
+    return parent;
+}
+
+DeleteMode C2DObject::getDeleteMode() const {
     return deleteMode;
 }
 
@@ -147,7 +156,7 @@ void C2DObject::setDeleteMode(DeleteMode mode) {
     deleteMode = mode;
 }
 
-int C2DObject::getLayer() {
+int C2DObject::getLayer() const {
     return layer;
 }
 
@@ -165,7 +174,7 @@ void C2DObject::setLayer(int layer) {
     }
 }
 
-std::vector<C2DObject *> C2DObject::getChilds() {
+C2DObject::array C2DObject::getChilds() const {
     return childs;
 }
 

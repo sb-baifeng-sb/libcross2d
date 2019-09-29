@@ -33,6 +33,9 @@ namespace c2d {
     class C2DObject {
 
     public:
+        typedef std::vector<C2DObject*> array;
+
+    public:
 
         virtual ~C2DObject();
 
@@ -56,17 +59,21 @@ namespace c2d {
         virtual void setVisibility(Visibility visibility, bool tweenPlay = false);
 
         // deletion mode
-        virtual DeleteMode getDeleteMode();
+        virtual DeleteMode getDeleteMode() const;
 
         virtual void setDeleteMode(DeleteMode mode);
 
-        virtual int getLayer();
+        virtual int getLayer() const;
 
         virtual void setLayer(int layer);
 
         virtual void setAlpha(uint8_t alpha, bool recursive = false);
 
-        virtual std::vector<C2DObject *> getChilds();
+        virtual void setParent(C2DObject* parent);
+
+        virtual C2DObject* getParent() const;
+
+        virtual array getChilds() const;
 
         Type getType() const;
 
@@ -77,7 +84,7 @@ namespace c2d {
         virtual bool onInput(Input::Player *players);
 
         // always called, even if the object is hidden
-        virtual void onUpdate();
+        virtual void onUpdate(float dt);
 
         virtual void onDraw(Transform &transform, bool draw = true);
 

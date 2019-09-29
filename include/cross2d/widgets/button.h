@@ -10,7 +10,7 @@
 
 namespace c2d {
 
-    class Button : public c2d::RectangleShape {
+    class Button : public RectangleShape {
 
     public:
 

@@ -18,7 +18,7 @@ using namespace c2d;
 std::string POSIXIo::getDataWritePath() const {
 
 #ifndef __PSP2__
-    char buf[1024];
+    char buf[1024] = {0};
     if (getcwd(buf, sizeof(buf))) {
         std::string str = std::string(buf) + "/";
 #ifdef __SWITCH__
